@@ -4,15 +4,20 @@
 
 #include <Wire.h>
 #include <SPI.h>
-#include <Adafruit_PN532.h>
+#include <nfc_pn532.h>
 
 // If using the breakout with SPI, define the pins for SPI communication.
-#define PN532_SCK  (18)  // ESP32 SCK
-#define PN532_MISO (19)  // ESP32 MISO
-#define PN532_MOSI (23)  // ESP32 MOSI
-#define PN532_SS   (5)   // ESP32 CS
-// Use this line for a breakout with a software SPI connection (recommended):
-Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
+// #define PN532_SCK  (18)  // ESP32 SCK
+// #define PN532_MISO (19)  // ESP32 MISO
+// #define PN532_MOSI (23)  // ESP32 MOSI
+// #define PN532_SS   (5)   // ESP32 CS
+// // Use this line for a breakout with a software SPI connection (recommended):
+// Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
+#define SDA_PIN 21
+#define SCL_PIN 22
+
+Adafruit_PN532 nfc(SDA_PIN, SCL_PIN);
+// Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
@@ -20,10 +25,6 @@ void setupLCD(void)
 {
   lcd.init();
   lcd.backlight();
-  lcd.setCursor(0,0);
-  lcd.print("Set up done");
-  lcd.setCursor(0,1);
-  lcd.print("Let's start");
 }
 
 void setupNFC(void) {
